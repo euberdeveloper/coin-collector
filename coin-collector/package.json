@@ -1,13 +1,20 @@
 {
   "name": "coin-collector",
-  "version": "0.0.0",
+  "main": "dist/electron/main.js",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "electron": "npm run electron-compile && ng build --base-href ./ && npm run electron-serve",
+    "electron-compile": "tsc --p electron",
+    "electron-prod": "npm run electron-compile && ng build --prod --build-optimizer --base-href ./ && npm run electron-serve",
+    "electron-build": "npm run electron-compile && ng build --base-href ./",
+    "electron-build-prod": "npm run electron-compile && ng build --prod --build-optimizer --base-href ./",
+    "electron-serve": "electron ."
   },
   "private": true,
   "dependencies": {
@@ -29,10 +36,11 @@
     "@angular/cli": "~7.1.1",
     "@angular/compiler-cli": "~7.1.0",
     "@angular/language-service": "~7.1.0",
-    "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
+    "electron": "^3.0.10",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.1.1",
