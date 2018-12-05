@@ -12,7 +12,7 @@ export { Ambito, Parametro, Unit } from './indexed-db.interface';
 })
 export class IndexedDBService {
 
-  private dbName = "my-coin-collector-newtest52";
+  private dbName = "my-coin-collector-newtest11";
   private db: CoinsDB;
 
   constructor() {

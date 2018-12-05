@@ -95,6 +95,28 @@ export const menu: Interface = {
                   }
                 ]
               }
+            },
+            {
+              name: 'Risorse',
+              icon: 'save',
+              link: '/resources/images',
+              menu: {
+                indentation: 8,
+                iconsScale: 0.9,
+                divider: true,
+                items: [
+                  {
+                    name: 'Immagini',
+                    icon: 'photo',
+                    link: '/resources/images'
+                  },
+                  {
+                    name: 'Fatture',
+                    icon: 'insert_drive_file',
+                    link: '/resources/invoices'
+                  },
+                ]
+              }
             }
           ]
     }
