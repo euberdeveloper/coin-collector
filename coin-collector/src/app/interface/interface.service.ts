@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { Interface } from './interface.interface';
 
 export { menu } from './menu';
+export { arrangement } from './arrangement.interface';
 export { Interface } from './interface.interface';
 export { Menu, MenuItem } from './menu.interface';
 

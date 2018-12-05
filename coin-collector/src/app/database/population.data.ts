@@ -1,4 +1,22 @@
-import { Parametro } from './indexed-db.interface';
+import { Parametro, Ambito, Unit } from './indexed-db.interface';
+
+export const ambiti: Ambito[] = [
+    { id: 'REP_VEN', display: 'Repubblica di Venezia' },
+    { id: 'VE1_RSA', display: 'Vittorio Emanuele I' },
+    { id: 'CFE_RSA', display: 'Carlo Felice' },
+    { id: 'CAL_RSA', display: 'Carlo Alberto' },
+    { id: 'VE2_RSA', display: 'Vittorio Emanuele II - Re di Sardegna' },
+    { id: 'VE2_REL', display: 'Vittorio Emanuele II - Re eletto' },
+    { id: 'VE2_RIT', display: 'Vittorio Emanuele I - Re d\'Italia' },
+    { id: 'UM1_RIT', display: 'Umberto I' },
+    { id: 'VE3_RIT', display: 'Vittorio Emanuele III' },
+    { id: 'UM1_COL', display: 'Umberto I - Colonie' },
+    { id: 'VE3_COL', display: 'Vittorio Emanuele III - Colonie' },
+    { id: 'AFS_COL', display: 'Amministrazione Fiduciaria Italiana Somalia' },
+    { id: 'ITA_LIR', display: 'Repubblica Italiana' },
+    { id: 'SMN_LIR', display: 'San Marino' },
+    { id: 'VAT_LIR', display: 'Città del Vaticano' }
+];
 
 export const conservazioni: Parametro[] = [
     { value: 'B' },
@@ -98,4 +116,15 @@ export const zecche: Parametro[] = [
     { value: 'MILANO' },
     { value: 'TORINO' },
     { value: 'NAPOLI' }
+];
+
+export const pesi: Unit[] = [
+    { unit: 'g', prefix: true },
+    { unit: 'oz', prefix: false }
+];
+
+export const lunghezze: Unit[] = [
+    { unit: 'm', prefix: true },
+    { unit: 'in', prefix: false },
+    { unit: 'ft', prefix: false }
 ];

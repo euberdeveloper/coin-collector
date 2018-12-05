@@ -73,6 +73,28 @@ export const menu: Interface = {
                     }
                   ]
               } 
+            },
+            { 
+              name: 'Unità',
+              icon: 'straighten',
+              link: '/units/pesi',
+              menu: {
+                indentation: 8,
+                iconsScale: 0.9,
+                divider: true,
+                items: [
+                  {
+                    name: "Pesi",
+                    icon: "brush",
+                    link: "/units/pesi"
+                  },
+                  {
+                    name: "Lunghezze",
+                    icon: "brush",
+                    link: "/units/lunghezze"
+                  }
+                ]
+              }
             }
           ]
     }

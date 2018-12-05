@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import { Parametro } from './indexed-db.interface';
+import { Parametro, Unit } from './indexed-db.interface';
 
 export class CoinsDB extends Dexie {
 
@@ -14,6 +14,9 @@ export class CoinsDB extends Dexie {
   stati: Dexie.Table<Parametro, number>;
   nominali: Dexie.Table<Parametro, number>;
   zecche: Dexie.Table<Parametro, number>;
+
+  pesi: Dexie.Table<Unit, number>;
+  lunghezze: Dexie.Table<Unit, number>;
     
   constructor(name: string) {
     super(name);
@@ -28,7 +31,9 @@ export class CoinsDB extends Dexie {
         sovrani: '++id, value',
         stati: '++id, value',
         nominali: '++id, value',
-        zecche: '++id, value'
+        zecche: '++id, value',
+        pesi: '++id, unit, prefix',
+        lunghezze: '++id, unit, prefix'
     });
   }
 

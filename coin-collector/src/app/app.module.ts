@@ -10,13 +10,15 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AppComponent } from 'src/app/app.component';
 import { SideMenuComponent } from 'src/app/side-menu/side-menu.component';
 import { ParametriComponent } from 'src/app/parametri/parametri.component';
+import { UnitsComponent } from 'src/app/units/units.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SideMenuComponent,
-    ParametriComponent
+    ParametriComponent,
+    UnitsComponent
   ],
   imports: [
     BrowserModule,

@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { CoinsDB } from './indexed-db.class';
-import { Parametro } from './indexed-db.interface';
-import { conservazioni, contorni, denominazioni, materiali, rarita, segniZecche, sovranita, sovrani, stati, nominali, zecche } from './population.data';
+import { Parametro, Unit } from './indexed-db.interface';
+import { conservazioni, contorni, denominazioni, materiali, rarita, segniZecche, sovranita, sovrani, stati, nominali, zecche, pesi, lunghezze } from './population.data';
 
-export { Parametro } from './indexed-db.interface';
+export { Ambito, Parametro, Unit } from './indexed-db.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IndexedDBService {
 
-  private dbName = "my-coin-collector-newtest23";
+  private dbName = "my-coin-collector-newtest52";
   private db: CoinsDB;
 
   constructor() {
@@ -33,6 +33,8 @@ export class IndexedDBService {
       this.db.stati.bulkPut(stati);
       this.db.nominali.bulkPut(nominali);
       this.db.zecche.bulkPut(zecche);
+      this.db.pesi.bulkPut(pesi);
+      this.db.lunghezze.bulkPut(lunghezze);
     });
   }
 
@@ -129,6 +131,108 @@ export class IndexedDBService {
         context.db.table<Parametro, number>(name).hook('deleting').unsubscribe(creating);
         context.db.table<Parametro, number>(name).hook('deleting').unsubscribe(updating);
         context.db.table<Parametro, number>(name).hook('deleting').unsubscribe(deleting);
+      }});
+
+    });
+  }
+
+  getAllUnits(name: string): Promise<Unit[]> {
+    return this.db.table<Unit, number>(name).toArray();
+  }
+
+  addUnit(name: string, unit: Unit): Promise<number> {
+    return this.db.table<Unit, number>(name).add(unit);
+  }
+
+  addUnits(name: string, units: Unit[]): Promise<number> {
+    return this.db.table<Unit, number>(name).bulkPut(units);
+  }
+
+  toggleUnit(name: string, unit: Unit): Promise<number> {
+    return this.db.table<Unit, number>(name).update(unit.id, { prefix: !unit.prefix });
+  }
+
+  removeUnit(name: string, id: number): Promise<void> {
+    return this.db.table<Unit, number>(name).delete(id);
+  }
+
+  removeAllUnits(name: string): Promise<void> {
+    return this.db.table<Unit, number>(name).clear();
+  }
+
+  swapUnits(name: string, x: Unit, y: Unit) {
+    const temp = x.id;
+    x.id = y.id;
+    y.id = temp;
+    return this.db.table<Unit, number>(name).bulkPut([x, y]);
+  }
+
+  trackUnits(name: string): Observable<Unit[]> {
+    const context = this;
+    return new Observable<Unit[]>((observer) => {
+      let creating, updating, deleting;
+      
+      context.db.table<Unit, number>(name).hook('creating', creating = function (primKey, obj, transaction) {
+        this.onsuccess = (key: number) => {
+          console.log('%c ' + name + ' element by id ' + key + ' created succesfully', 'color: green;');
+          context.getAllUnits(name)
+            .then(unita => {
+              console.log('%c ' + name + ' getted succesfully', 'color: green;');
+              observer.next(unita);
+            })
+            .catch(error => {
+              console.error('getting ' + name + ' error');
+              observer.error(error);
+            });
+        };
+        this.onerror = (err) => {
+          console.error(name + ' element ' + obj.id + ' creation error');
+          observer.error(err);
+        }
+      });
+
+      context.db.table<Unit, number>(name).hook('updating', updating = function(modification, primKey, obj, transaction) {
+        this.onsuccess = (obj: Unit) => {
+          console.log('%c ' + name + ' element ' + obj.id + ' updated succesfully', 'color: green;');
+          context.getAllUnits(name)
+            .then(unita => {
+              console.log('%c ' + name + ' getted succesfully', 'color: green;');
+              observer.next(unita);
+            })
+            .catch(error => {
+              console.error('getting ' + name + ' error');
+              observer.error(error);
+            });
+        };
+        this.onerror = (err) => {
+          console.error(name + ' element ' + obj.id + ' updating error');
+          observer.error(err);
+        }
+      });
+
+      context.db.table<Unit, number>(name).hook('deleting', deleting = function(primKey, obj, transaction) {
+        this.onsuccess = () => {
+          console.log('%c ' + name + ' element ' + obj.id + ' deleted succesfully', 'color: green;');
+          context.getAllUnits(name)
+            .then(unit => {
+              console.log('%c ' + name + ' getted succesfully', 'color: green;');
+              observer.next(unit);
+            })
+            .catch(error => {
+              console.error('getting ' + name + ' error');
+              observer.error(error);
+            });
+        };
+        this.onerror = (err) => {
+          console.error(name + ' element ' + obj.id + ' deleting error');
+          observer.error(err);
+        }
+      });
+
+      return ({ unsubscribe() { 
+        context.db.table<Unit, number>(name).hook('deleting').unsubscribe(creating);
+        context.db.table<Unit, number>(name).hook('deleting').unsubscribe(updating);
+        context.db.table<Unit, number>(name).hook('deleting').unsubscribe(deleting);
       }});
 
     });

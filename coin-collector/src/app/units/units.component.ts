@@ -4,26 +4,27 @@ import { MatChipInputEvent } from '@angular/material';
 import { Subscription } from 'rxjs';
 
 import { InterfaceService, arrangement } from 'src/app/interface/interface.service';
-import { Parametro, IndexedDBService } from 'src/app/database/indexed-db.service';
-import { HistoryAdd, HistoryDelete, HistorySwap, HistoryEvent } from './parametri.interface';
+import { Unit, IndexedDBService } from 'src/app/database/indexed-db.service';
+import { HistoryAdd, HistoryDelete, HistorySwap, HistoryEvent, HistoryToggle } from './units.interface';
+
 
 @Component({
-  selector: 'app-parametri',
-  templateUrl: './parametri.component.html',
-  styleUrls: ['./parametri.component.css']
+  selector: 'app-units',
+  templateUrl: './units.component.html',
+  styleUrls: ['./units.component.css']
 })
-export class ParametriComponent implements OnInit {
+export class UnitsComponent implements OnInit {
 
-  parametri: Parametro[];
-  history: Array<HistoryAdd | HistoryDelete | HistorySwap> = [];
-  param: string;
+  units: Unit[];
+  history: Array<HistoryAdd | HistoryDelete | HistorySwap | HistoryToggle> = [];
+  unit: string;
   title: string;
   selected = -1;
 
-  arrangement = arrangement.parametri;
+  private arrangement = arrangement.units;
 
+  private unitsSubscription: Subscription;
   private routeSubscription: Subscription;
-  private parametriSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,25 +34,25 @@ export class ParametriComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.ui.setTitle("PARAMETRI");
+      this.ui.setTitle("UNITÀ");
       this.ui.setSelectedItem(this.arrangement);
     }, 1);
     this.routeSubscription = this.route.paramMap.subscribe(
       (params: ParamMap) => {
-        if(this.parametriSubscription && !this.parametriSubscription.closed) {
-          this.parametriSubscription.unsubscribe();
+        if(this.unitsSubscription && !this.unitsSubscription.closed) {
+          this.unitsSubscription.unsubscribe();
         }
-        this.param = params.get('param'); 
-        this.db.getAllParametri(this.param)
-          .then((parametri: Parametro[]) => {
-            this.parametri = parametri;
+        this.unit = params.get('unit'); 
+        this.db.getAllUnits(this.unit)
+          .then((units: Unit[]) => {
+            this.units = units;
           })
-          .catch(error => console.error("error in getting parametri: ", error));
-        this.parametriSubscription = this.db.trackParametri(this.param).subscribe(parametri => this.parametri = parametri);
+          .catch(error => console.error("error in getting units: ", error));
+        this.unitsSubscription = this.db.trackUnits(this.unit).subscribe(units => this.units = units);
         this.history = [];
-        const uiState = this.ui.snapshot;
-        const index = uiState.menu.items[this.arrangement].menu.items.findIndex(subitem => subitem.link == '/parametri/' + this.param);
-        this.title = uiState.menu.items[this.arrangement].menu.items[index].name;
+        const tbState = this.ui.snapshot;
+        const index = tbState.menu.items[this.arrangement].menu.items.findIndex(subitem => subitem.link == '/units/' + this.unit);
+        this.title = tbState.menu.items[this.arrangement].menu.items[index].name;
         setTimeout(() => {
           this.ui.setSelectedItem(index, this.arrangement);
         }, 1);
@@ -63,8 +64,8 @@ export class ParametriComponent implements OnInit {
     if(this.routeSubscription && !this.routeSubscription.closed) {
       this.routeSubscription.unsubscribe();
     }
-    if(this.parametriSubscription && !this.parametriSubscription.closed) {
-      this.parametriSubscription.unsubscribe();
+    if(this.unitsSubscription && !this.unitsSubscription.closed) {
+      this.unitsSubscription.unsubscribe();
     }
   }
 
@@ -72,7 +73,7 @@ export class ParametriComponent implements OnInit {
     const input = event.input;
     const value = event.value;
     if ((value || '').trim()) {
-      this.db.addParameter(this.param, { value: value.trim() })
+      this.db.addUnit(this.unit, { unit: value.trim() })
         .then((key: number) => {
           const historyAdd: HistoryAdd = {
             event: HistoryEvent.ADD,
@@ -86,13 +87,13 @@ export class ParametriComponent implements OnInit {
     }
   }
 
-  remove(parametro: Parametro): void {
+  remove(Unit: Unit): void {
     const historyDelete: HistoryDelete = {
       event: HistoryEvent.DELETE,
-      parametro: parametro
+      unit: Unit
     };
     this.history.push(historyDelete);
-    this.db.removeParameter(this.param, parametro.id);
+    this.db.removeParameter(this.unit, Unit.id);
   }
 
   select(index: number): void {
@@ -106,14 +107,24 @@ export class ParametriComponent implements OnInit {
       else {
         const historySwap: HistorySwap = {
           event: HistoryEvent.SWAP,
-          x: this.parametri[this.selected],
-          y: this.parametri[index]
+          x: this.units[this.selected],
+          y: this.units[index]
         };
         this.history.push(historySwap);
-        this.db.swapParameters(this.param, this.parametri[this.selected], this.parametri[index]);
+        this.db.swapUnits(this.unit, this.units[this.selected], this.units[index]);
         this.selected = -1;
       }
     }
+  }
+
+  togglePrefix(): void {
+    const unit: Unit = this.units[this.selected];
+    const historyToggle: HistoryToggle = {
+      event: HistoryEvent.TOGGLE,
+      unit: unit
+    };
+    this.history.push(historyToggle);
+    this.db.toggleUnit(this.unit, unit);
   }
 
   undo(): void {
@@ -123,16 +134,20 @@ export class ParametriComponent implements OnInit {
       switch(h.event) {
         case HistoryEvent.ADD:
           h = h as HistoryAdd;
-          this.db.removeParameter(this.param, h.index);
+          this.db.removeParameter(this.unit, h.index);
           break;
         case HistoryEvent.DELETE:
           h = h as HistoryDelete;
-          this.db.addParameter(this.param, h.parametro);
+          this.db.addUnit(this.unit, h.unit);
           this.selected = -1;
           break;
         case HistoryEvent.SWAP:
           h = h as HistorySwap;
-          this.db.swapParameters(this.param, h.x, h.y);
+          this.db.swapUnits(this.unit, h.x, h.y);
+          break;
+        case HistoryEvent.TOGGLE:
+          h = h as HistoryToggle;
+          this.db.toggleUnit(this.unit, { ...h.unit, prefix: !h.unit.prefix });
           break;
       }
       this.history.pop();
