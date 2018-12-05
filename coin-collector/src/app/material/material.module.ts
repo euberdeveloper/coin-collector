@@ -13,6 +13,7 @@ import {
   MatSidenavModule,
   MatSlideToggleModule,
   MatSnackBarModule,
+  MatProgressSpinnerModule,
   MatTableModule,
   MatToolbarModule
 } from '@angular/material';
@@ -35,6 +36,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     MatSidenavModule,
     MatSlideToggleModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
     MatTableModule,
     MatToolbarModule,
     TextFieldModule
@@ -54,6 +56,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     MatSidenavModule,
     MatSlideToggleModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
     MatTableModule,
     MatToolbarModule,
     TextFieldModule

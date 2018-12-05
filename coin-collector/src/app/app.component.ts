@@ -1,7 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatSidenav } from '@angular/material';
 import { Subscription } from 'rxjs';
+import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 
-import { InterfaceService, menu } from './interface/interface.service';
+import { InterfaceService, menu } from 'src/app/interface/interface.service';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +14,15 @@ import { InterfaceService, menu } from './interface/interface.service';
 export class AppComponent implements OnInit, OnDestroy {
   
   uiState = menu;
+  @ViewChild(MatSidenav) sidenav: MatSidenav;
 
   private uiSubscription: Subscription;
 
-  constructor(private ui: InterfaceService) { }
+  constructor(
+    private key: HotkeysService, 
+    private router: Router,
+    private ui: InterfaceService
+  ) { }
 
   ngOnInit() {
     this.ui.setState(this.uiState);
@@ -26,12 +34,52 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       }, 1)
     );
+    this.setKeyEvents();
   }
 
   ngOnDestroy(): void {
     if(this.uiSubscription && !this.uiSubscription.closed) {
       this.uiSubscription.unsubscribe();
     }
+  }
+
+  private setKeyEvents(): void {
+
+    this.key.add(new Hotkey('ctrl+m', (_event: KeyboardEvent): boolean => {
+      this.sidenav.toggle();
+      return false;
+    }));
+
+    this.key.add(new Hotkey('ctrl+f', (_event: KeyboardEvent): boolean => {
+      this.router.navigate(['collezione']);
+      return false;
+    }));
+
+    this.key.add(new Hotkey('ctrl+p', (_event: KeyboardEvent): boolean => {
+      this.router.navigate(['parametri/conservazioni']);
+      return false;
+    }));
+
+    this.key.add(new Hotkey('ctrl+u', (_event: KeyboardEvent): boolean => {
+      this.router.navigate(['units/pesi']);
+      return false;
+    }));
+
+    this.key.add(new Hotkey('ctrl+r', (_event: KeyboardEvent): boolean => {
+      this.router.navigate(['resources/images']);
+      return false;
+    }));
+
+    this.key.add(new Hotkey('ctrl+a', (_event: KeyboardEvent): boolean => {
+      this.router.navigate(['gestione/add-scheda']);
+      return false;
+    }));
+
+    this.key.add(new Hotkey('ctrl+b', (_event: KeyboardEvent): boolean => {
+      this.router.navigate(['gestione/backup']);
+      return false;
+    }));
+
   }
 
 }

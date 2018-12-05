@@ -11,7 +11,7 @@
         <input placeholder="Nuova unità..." [matChipInputFor]="chipList" (matChipInputTokenEnd)="add($event)">
       </mat-chip-list>
     </mat-form-field>
-    <mat-slide-toggle *ngIf="selected != -1" [checked]="units[selected].prefix" (click)="togglePrefix(); $event.stopPropagation()"></mat-slide-toggle>
+    <mat-slide-toggle *ngIf="selected != -1 && units.length" [checked]="units[selected].prefix" (click)="togglePrefix(); $event.stopPropagation()"></mat-slide-toggle>
   </div>
   <button mat-fab color="primary" *ngIf="history && history.length" (click)="undo(); $event.stopPropagation()">
     <mat-icon>refresh</mat-icon>

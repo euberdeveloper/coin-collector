@@ -7,6 +7,7 @@ import { NgxElectronModule } from 'ngx-electron';
 import { NgxChildProcessModule } from 'ngx-childprocess';
 import { NgxFsModule } from 'ngx-fs';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { HotkeyModule } from 'angular2-hotkeys';
 
 import { MaterialModule } from 'src/app/material/material.module';
 import { AppRoutingModule } from 'src/app/app-routing.module';
@@ -27,6 +28,7 @@ import { QuantityInputComponent } from 'src/app/gestione/scheda/form-scheda/quan
 import { ResourceInputComponent } from 'src/app/gestione/scheda/form-scheda/resource-input/resource-input.component';
 import { YearInputComponent } from 'src/app/gestione/scheda/form-scheda/year-input/year-input.component';
 import { BackupComponent } from 'src/app/gestione/backup/backup.component';
+import { BackupProgressComponent } from 'src/app/gestione/backup/backup-progress/backup-progress.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { BackupComponent } from 'src/app/gestione/backup/backup.component';
     QuantityInputComponent,
     ResourceInputComponent,
     YearInputComponent,
-    BackupComponent
+    BackupComponent,
+    BackupProgressComponent
   ],
   imports: [
     BrowserModule,
@@ -57,11 +60,13 @@ import { BackupComponent } from 'src/app/gestione/backup/backup.component';
     NgxChildProcessModule,
     NgxFsModule,
     PerfectScrollbarModule,
+    HotkeyModule.forRoot(),
     AppRoutingModule
   ],
   providers: [],
   entryComponents: [ 
-    MonetaDetailsComponent 
+    MonetaDetailsComponent,
+    BackupProgressComponent 
   ],
   bootstrap: [ AppComponent ]
 })
