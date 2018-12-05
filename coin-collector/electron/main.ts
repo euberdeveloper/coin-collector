@@ -15,7 +15,7 @@ function start(time: number, debug: boolean) {
   }, time);
 }
 
-app.on("ready", () => start(8000, false) );
+app.on("ready", () => start(8000, true) );
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
