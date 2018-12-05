@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
+import { ChildProcessService } from 'ngx-childprocess';
+import { ChildProcess } from 'ngx-childprocess/src/childProcess.interface';
 import { FsService } from 'ngx-fs';
 import { Subject, Observable } from 'rxjs';
 
@@ -14,18 +16,21 @@ export class SystemService {
   private app: Electron.App;
   private shell: Electron.Shell;
   private dialog: Electron.Dialog;
+  private childProcess: ChildProcess;
   private fs: any;
 
   private userDataPath: string;
   private messageSubject = new Subject<SnackMessage>();
 
   constructor(
-    private electron: ElectronService, 
+    private electron: ElectronService,  
+    childProcess: ChildProcessService,
     fs: FsService, 
   ) {
     this.app = this.electron.remote.app;
     this.shell = this.electron.remote.shell;
     this.dialog = this.electron.remote.dialog;
+    this.childProcess = childProcess.childProcess;
     this.fs = fs.fs;
     this.userDataPath = this.app.getPath('userData');
   }
@@ -65,6 +70,42 @@ export class SystemService {
       }
       this.messageSubject.next(snackMessage);
     }
+  }
+
+  openFile(path: string): Promise<void> {
+
+    function getCommand(): string {
+      switch (process.platform) { 
+         case 'darwin': 
+          return 'open';
+         case 'win32': 
+          return 'start "Dummy title"';
+         case 'linux': 
+          return 'xdg-open';
+         default:
+          console.warn("Unknown process platform " + process.platform);
+          return null;
+      }
+   }
+
+    return new Promise<void>(
+      (resolve, reject) => {
+        const openCommand = getCommand();
+        if(openCommand) {
+          this.childProcess.exec(openCommand + ' "' + path + '"', null, (error, _stdout, _stderr) => {
+            if(error) {
+              reject(error);
+            }
+          })
+          .on('close', code => {
+            resolve();
+          });
+        }
+        else {
+          reject('error: unknown process platform');
+        }
+      }
+    );
   }
 
   private getTitle(resource: string): string {

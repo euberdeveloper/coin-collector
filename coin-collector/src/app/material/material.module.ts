@@ -4,6 +4,7 @@ import {
   MatCardModule,
   MatChipsModule,
   MatDatepickerModule,
+  MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -12,6 +13,7 @@ import {
   MatSidenavModule,
   MatSlideToggleModule,
   MatSnackBarModule,
+  MatTableModule,
   MatToolbarModule
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -23,6 +25,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     MatCardModule,
     MatChipsModule,
     MatDatepickerModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -32,14 +35,16 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     MatSidenavModule,
     MatSlideToggleModule,
     MatSnackBarModule,
-    TextFieldModule,
-    MatToolbarModule
+    MatTableModule,
+    MatToolbarModule,
+    TextFieldModule
   ],
   exports: [
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
     MatDatepickerModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -49,8 +54,9 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     MatSidenavModule,
     MatSlideToggleModule,
     MatSnackBarModule,
-    TextFieldModule,
-    MatToolbarModule
+    MatTableModule,
+    MatToolbarModule,
+    TextFieldModule
   ]
 })
 export class MaterialModule { }

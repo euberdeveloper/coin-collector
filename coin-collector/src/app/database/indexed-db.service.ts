@@ -13,7 +13,7 @@ export { ambiti } from './population.data';
 })
 export class IndexedDBService {
 
-  private dbName = "my-coin-collector-newtest11";
+  private dbName = "my-coin-collector-newtest8";
   private db: CoinsDB;
 
   constructor() {

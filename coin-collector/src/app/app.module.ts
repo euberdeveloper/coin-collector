@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxElectronModule } from 'ngx-electron';
+import { NgxChildProcessModule } from 'ngx-childprocess';
 import { NgxFsModule } from 'ngx-fs';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
@@ -12,6 +13,10 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 
 import { AppComponent } from 'src/app/app.component';
 import { SideMenuComponent } from 'src/app/side-menu/side-menu.component';
+import { CollezioneComponent } from 'src/app/collezione/collezione.component';
+import { MonetaDetailsComponent } from 'src/app/collezione/moneta-details/moneta-details.component';
+import { PrePipe } from 'src/app/collezione/moneta-details/pipe/pre.pipe';
+import { MoneteTableComponent } from 'src/app/collezione/monete-table/monete-table.component';
 import { ParametriComponent } from 'src/app/parametri/parametri.component';
 import { UnitsComponent } from 'src/app/units/units.component';
 import { ResourcesComponent } from 'src/app/resources/resources.component';
@@ -27,6 +32,10 @@ import { BackupComponent } from 'src/app/gestione/backup/backup.component';
   declarations: [
     AppComponent,
     SideMenuComponent,
+    CollezioneComponent,
+    MonetaDetailsComponent,
+    PrePipe,
+    MoneteTableComponent,
     ParametriComponent,
     UnitsComponent,
     ResourcesComponent,
@@ -45,11 +54,15 @@ import { BackupComponent } from 'src/app/gestione/backup/backup.component';
     MaterialModule,
     FlexLayoutModule,
     NgxElectronModule,
+    NgxChildProcessModule,
     NgxFsModule,
     PerfectScrollbarModule,
     AppRoutingModule
   ],
   providers: [],
+  entryComponents: [ 
+    MonetaDetailsComponent 
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

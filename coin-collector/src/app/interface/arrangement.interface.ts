@@ -1,4 +1,5 @@
 export interface Arrangement {
+    collezione: number;
     parametri: number;
     units: number;
     risorse: number;
@@ -6,8 +7,9 @@ export interface Arrangement {
 }
 
 export const arrangement: Arrangement = {
-    parametri: 0,
-    units: 1,
-    risorse: 2,
-    gestione: 3
+    collezione: 0,
+    parametri: 1,
+    units: 2,
+    risorse: 3,
+    gestione: 4
 }
