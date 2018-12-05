@@ -117,6 +117,28 @@ export const menu: Interface = {
                   },
                 ]
               }
+            },
+            {
+              name: 'Gestione',
+              icon: 'build',
+              link: 'gestione/add-scheda',
+              menu: {
+                indentation: 8,
+                iconsScale: 0.9,
+                divider: true,
+                items: [
+                  {
+                    name: 'Aggiungi scheda',
+                    icon: 'add',
+                    link: 'gestione/add-scheda'
+                  },
+                  {
+                    name: 'Backup',
+                    icon: 'backup',
+                    link: 'gestione/backup'
+                  },
+                ]
+              }
             }
           ]
     }

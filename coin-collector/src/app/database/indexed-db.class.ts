@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import { Parametro, Unit } from './indexed-db.interface';
+import { Parametro, Unit, Moneta } from './indexed-db.interface';
 
 export class CoinsDB extends Dexie {
 
@@ -17,6 +17,8 @@ export class CoinsDB extends Dexie {
 
   pesi: Dexie.Table<Unit, number>;
   lunghezze: Dexie.Table<Unit, number>;
+
+  monete: Dexie.Table<Moneta, number>;
     
   constructor(name: string) {
     super(name);
@@ -33,7 +35,8 @@ export class CoinsDB extends Dexie {
         nominali: '++id, value',
         zecche: '++id, value',
         pesi: '++id, unit, prefix',
-        lunghezze: '++id, unit, prefix'
+        lunghezze: '++id, unit, prefix',
+        monete: '++id, codice, ambito, stato, sovrano, sovranita, nominale, denominazione, descrizione, anno, segnoAnno, zecca, segnoZecca, tiratura, materiale, rarita, conservazione, diametro, peso, contorno, valore, immagine, fornitore, dataAcquisto, prezzoAcquisto, fattura, perizia, note'
     });
   }
 
