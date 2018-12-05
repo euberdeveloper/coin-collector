@@ -1,24 +1,28 @@
 import { app } from 'electron';
 
 import { MainWindow } from './main-window';
+import { SplashWindow } from './splash-window';
 
 let main: MainWindow;
+let splash: SplashWindow;
 
-function start(debug: boolean) {
+function start(time: number, debug: boolean) {
   main = new MainWindow(debug);
-  main.show();
+  splash = new SplashWindow();
+  setTimeout(() => {
+    splash.close();
+    main.show();
+  }, time);
 }
 
-app.on("ready", () => start(false) );
+app.on("ready", () => start(8000, false) );
 
-// on macOS, closing the window doesn't quit the app
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
 });
 
-// initialize the app's main window
 app.on("activate", () => {
   if (main.getWindow() === null) {
     main = new MainWindow();
