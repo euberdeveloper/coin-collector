@@ -8,13 +8,15 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 
 import { AppComponent } from 'src/app/app.component';
-import { SideMenuComponent } from './side-menu/side-menu.component';
+import { SideMenuComponent } from 'src/app/side-menu/side-menu.component';
+import { ParametriComponent } from 'src/app/parametri/parametri.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SideMenuComponent
+    SideMenuComponent,
+    ParametriComponent
   ],
   imports: [
     BrowserModule,
