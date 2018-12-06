@@ -5,9 +5,11 @@ import * as url from 'url';
 export class MainWindow {
 
     private win: BrowserWindow;
+    opened: boolean;
   
     private init(): void {
       this.win = new BrowserWindow({ show: false });
+      this.opened = false;
     }
   
     private load(): void {
@@ -40,10 +42,15 @@ export class MainWindow {
       
     show(): void {
       this.win.show();
+      this.opened = true;
     }
   
     getWindow(): BrowserWindow {
       return this.win;
+    }
+
+    close(): void {
+      this.win.close();
     }
     
     constructor(debug?: boolean) {

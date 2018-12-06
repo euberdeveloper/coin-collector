@@ -2,6 +2,8 @@ import { BrowserWindow } from "electron";
 import * as path from 'path';
 import * as url from 'url';
 
+import { MainWindow } from "./main-window";
+
 export class SplashWindow {
 
   private win: BrowserWindow;
@@ -24,21 +26,27 @@ export class SplashWindow {
     );
   }
 
-  private onClose(): void {
+  onCloseinterval(timeout: NodeJS.Timer, main: MainWindow): void {
     this.win.on("closed", () => {
+      if(!main.opened) {
+        main.close();
+        clearTimeout(timeout);
+      }
       this.win = null;
     });
   }
 
+  hide(): void {
+    this.win.hide();
+  }
+
   close(): void {
-      this.win.hide();
       this.win.close();
   }
 
   constructor() {
     this.init();
     this.load();
-    this.onClose();
   }
 
 }

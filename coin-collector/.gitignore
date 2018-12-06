@@ -4,7 +4,6 @@
 /dist
 /tmp
 /out-tsc
-/coin-collector-*
 
 # dependencies
 /node_modules
