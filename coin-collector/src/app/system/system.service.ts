@@ -17,11 +17,16 @@ export { SnackType, SnackMessage } from './snack.interface';
 export class SystemService {
 
   private app: Electron.App;
-  private shell: Electron.Shell;
   private dialog: Electron.Dialog;
+  private webContents: Electron.WebContents;
   private ipcRenderer: Electron.IpcRenderer;
   private childProcess: ChildProcess;
   private fs: any;
+  private path: {
+    basename: (p: string, ext?: string) => string;
+    join: (...paths: string[]) => string;
+    normalize: (p: string) =>  string;
+  }
 
   private userDataPath: string;
   private messageSubject = new Subject<SnackMessage>();
@@ -34,26 +39,28 @@ export class SystemService {
     fs: FsService, 
   ) {
     this.app = this.electron.remote.app;
-    this.shell = this.electron.remote.shell;
     this.dialog = this.electron.remote.dialog;
+    this.webContents = this.electron.remote.getCurrentWebContents();
     this.ipcRenderer = this.electron.ipcRenderer;
     this.childProcess = childProcess.childProcess;
     this.fs = fs.fs;
     this.userDataPath = this.app.getPath('userData');
+    const path = electron.remote.require('path');
+    this.path = {
+      basename: path.basename,
+      join: path.join,
+      normalize: path.normalize
+    }
   }
 
   /* GENERAL METHODS  */
 
-  private cwd(path: string): string {
-    return this.userDataPath + '\\' + path;
-  }
-
   private makeFolderIfNotExists(folder: string): void {
     try {
-      const exists = this.fs.existsSync(this.cwd(folder));
+      const exists = this.fs.existsSync(this.path.join(this.userDataPath, folder));
       if(!exists) {
         try {
-          this.fs.mkdirSync(this.cwd(folder));
+          this.fs.mkdirSync(this.path.join(this.userDataPath, folder));
         } 
         catch(error) {
           const snackMessage: SnackMessage = {
@@ -78,19 +85,18 @@ export class SystemService {
   }
 
   private makePathIfNotExists(path: string): void {
-    const parts: string[] = path.split('\\');
+    const parts: string[] = path.replace(/\\/g, '/').split('/');
     let current = '';
-    for(let i = 0; i < parts.length; i++) {
-      current += parts[i];
+    for(let part of parts) {
+      current = this.path.join(current, part);
       this.makeFolderIfNotExists(current);
-      current += '\\';
     }
   }
 
   private copyDirectory(src: string, dest: string): Promise<void> {
     return new Promise<void>(
       (resolve, reject) => {
-        this.fs.readdir(this.cwd(src), (error, files) => {
+        this.fs.readdir(this.path.join(this.userDataPath, src), (error, files) => {
           if(error) {
             const snackMessage: SnackMessage = {
               type: SnackType.ERROR,
@@ -104,10 +110,11 @@ export class SystemService {
           else {
             let done = 0;
             const size = files.length;
+            if(size == 0) resolve();
             files.forEach(file => {
-              const from = this.cwd(src + '\\' + file);
-              const to = this.cwd(dest + '\\' + file);
-              this.fs.copyFile(from, to, (error) => {
+              const from = this.path.join(this.userDataPath, src, file);
+              const to = this.path.join(this.userDataPath, dest, file);
+              this.fs.copyFile(from, to, error => {
                 if(error) {
                   const snackMessage: SnackMessage = {
                     type: SnackType.ERROR,
@@ -139,6 +146,10 @@ export class SystemService {
     return this.progressSubject.asObservable();
   }
 
+  getFileName(path: string): string {
+    return this.path.basename(path);
+  }
+
   openFile(path: string): Promise<void> {
 
     function getCommand(): string {
@@ -164,7 +175,7 @@ export class SystemService {
               reject(error);
             }
           })
-          .on('close', code => {
+          .on('close', _code => {
             resolve();
           });
         }
@@ -200,18 +211,14 @@ export class SystemService {
   }
 
   private checkPath(resource: string, path: string): boolean {
-    const expected = this.cwd(resource + '\\' + this.getFileName(path));
+    const expected = this.path.join(this.userDataPath, resource, this.path.basename(path));
     return (path == expected);
-  }
-
-  getFileName(path: string): string {
-    const parts = path.split('\\');
-    return parts[parts.length - 1];
   }
 
   openResourceFolder(resource: string): void {
     this.makeFolderIfNotExists(resource);
-    this.shell.openExternal(this.cwd(resource));
+    this.openFile(this.path.join(this.userDataPath, resource))
+      .catch(error => console.error("error in opening resource folder: ", error));
   }
 
   addResource(resource: string): void {
@@ -220,13 +227,13 @@ export class SystemService {
       properties: ['openFile', 'multiSelections'],
       filters: this.getExtensionFilters(resource),
       buttonLabel: 'Aggiungi'
-    }, (files) => {
+    }, files => {
       if(files && files.length) {
         this.makeFolderIfNotExists(resource);
         for(let file of files) {
           const fileName = this.getFileName(file);
-          const target = this.cwd(resource + '\\' + fileName);
-          this.fs.copyFile(file, target, (error) => {
+          const target = this.path.join(this.userDataPath, resource, fileName);
+          this.fs.copyFile(file, target, error => {
             if(error) {
               const snackMessage: SnackMessage = {
                 type: SnackType.ERROR,
@@ -253,8 +260,8 @@ export class SystemService {
   getResources(resource: string): string[] {
     try {
       this.makeFolderIfNotExists(resource);
-      const files: string[] = this.fs.readdirSync(this.cwd(resource));
-      return files.map(file => this.cwd(resource + '\\' + file));
+      const files: string[] = this.fs.readdirSync(this.path.join(this.userDataPath, resource));
+      return files.map(file => this.path.join(this.userDataPath, resource, file));
     }
     catch(error) {
       console.error('error in reading dir ' + this.userDataPath, error);
@@ -267,7 +274,7 @@ export class SystemService {
       (resolve, reject) => {
         this.dialog.showOpenDialog({
           title: 'Seleziona ' + this.getTitle(resource),
-          defaultPath: this.cwd(resource),
+          defaultPath: this.path.join(this.userDataPath, resource),
           properties: ['openFile'],
           filters: this.getExtensionFilters(resource),
           buttonLabel: 'Seleziona'
@@ -293,7 +300,7 @@ export class SystemService {
         try {
           const files = this.fs.readdirSync(path);
           for(const file of files) {
-            const filePath = path + '\\' + file;
+            const filePath = this.path.join(path, file);
             const isDir = this.fs.lstatSync(filePath).isDirectory();
             if(isDir) {
                 this.clearDir(filePath, true);
@@ -474,9 +481,9 @@ export class SystemService {
   }
 
   private createBackupFile(backup: Backup): void {
-    this.makePathIfNotExists('temp\\backup');
+    this.makePathIfNotExists('temp/backup');
     const backupText = JSON.stringify(backup);
-    const path = this.cwd('temp\\backup\\backup.json');
+    const path = this.path.join(this.userDataPath, 'temp', 'backup', 'backup.json');
     try {
       this.fs.writeFileSync(path, backupText);
     }
@@ -493,8 +500,8 @@ export class SystemService {
 
   private createBackupResource(resource: string): Promise<void> {
     this.makeFolderIfNotExists(resource);
-    this.makePathIfNotExists('temp\\backup\\' + resource);
-    return this.copyDirectory(resource, 'temp\\backup\\' + resource);
+    this.makePathIfNotExists(this.path.join('temp', 'backup', resource));
+    return this.copyDirectory(resource, this.path.join('temp', 'backup', resource));
   }
 
   private saveBackup(): Promise<string> {
@@ -574,8 +581,8 @@ export class SystemService {
 
   private executeBackupResource(resource: string): Promise<void> {
     this.makeFolderIfNotExists(resource);
-    this.makePathIfNotExists(resource);
-    return this.copyDirectory('temp\\backup\\' + resource, resource);
+    this.makePathIfNotExists(this.path.join('temp', 'backup', resource));
+    return this.copyDirectory(this.path.join('temp', 'backup', resource), resource);
   }
 
   private checkBackup(backup: any): boolean {
@@ -602,7 +609,7 @@ export class SystemService {
     return new Promise<Backup>(
       (resolve, reject) => {
         try {
-          const text: string = this.fs.readFileSync(this.cwd('temp\\backup\\backup.json'), 'utf8');
+          const text: string = this.fs.readFileSync(this.path.join(this.userDataPath, 'temp', 'backup', 'backup.json'), 'utf8');
           const backup: any = JSON.parse(text);
           if(this.checkBackup(backup)) {
             resolve(backup as Backup);
@@ -739,7 +746,7 @@ export class SystemService {
   }
 
   createBackup(): void {
-    this.clearDir(this.cwd('temp'));
+    this.clearDir(this.path.join(this.userDataPath, 'temp'));
     this.cloneDB()
       .then(backup => {
         this.progressSubject.next('Preparazione backup in corso...');
@@ -752,9 +759,9 @@ export class SystemService {
                 this.saveBackup()
                   .then(destination => {
                     this.progressSubject.next('Compressione backup in corso...');
-                    this.zipDir(this.cwd('temp\\backup'), destination)
+                    this.zipDir(this.path.join(this.userDataPath, 'temp', 'backup'), destination)
                       .then(() => {
-                        this.clearDir(this.cwd('temp'));
+                        this.clearDir(this.path.join(this.userDataPath, 'temp'));
                         this.progressSubject.next(null);
                         const snackMessage: SnackMessage = {
                           type: SnackType.SUCCESS,
@@ -765,7 +772,7 @@ export class SystemService {
                       })
                       .catch(error => {
                         this.progressSubject.next(null);
-                        this.clearDir(this.cwd('temp'));
+                        this.clearDir(this.path.join(this.userDataPath, 'temp'));
                         const snackMessage: SnackMessage = {
                           type: SnackType.ERROR,
                           message: 'Errore: impossibile comprimere cartella',
@@ -783,7 +790,7 @@ export class SystemService {
                     object: error
                   }
                   this.messageSubject.next(snackMessage);
-                  this.clearDir(this.cwd('temp'));
+                  this.clearDir(this.path.join(this.userDataPath, 'temp'));
                 });
               });
           });
@@ -801,16 +808,16 @@ export class SystemService {
   }
 
   executeBackup(): void {
-    this.clearDir(this.cwd('temp'));
-    this.makePathIfNotExists('temp\\backup');
+    this.clearDir(this.path.join(this.userDataPath, 'temp'));
+    this.makePathIfNotExists(this.path.join('temp', 'backup'));
     this.selectBackup()
       .then(path => {
         this.progressSubject.next('Decompressione backup in corso...');
-        this.unzipDir(path, this.cwd('temp\\backup'))
+        this.unzipDir(path, this.path.join(this.userDataPath, 'temp', 'backup'))
           .then(() => {
             this.progressSubject.next('Esecuzione backup in corso...');
-            this.clearDir(this.cwd('images'));
-            this.clearDir(this.cwd('invoices'));
+            this.clearDir(this.path.join(this.userDataPath, 'images'));
+            this.clearDir(this.path.join(this.userDataPath, 'invoices'));
             this.executeBackupResource('images')
               .then(() => {
                 this.executeBackupResource('invoices')
@@ -822,7 +829,7 @@ export class SystemService {
                         .then(() => {
                           this.executeBackupDB(backup)
                             .then(() => {
-                              this.clearDir(this.cwd('temp'));
+                              this.clearDir(this.path.join(this.userDataPath, 'temp'));
                               this.progressSubject.next(null);
                               const snackMessage: SnackMessage = {
                                 type: SnackType.SUCCESS,
@@ -887,6 +894,17 @@ export class SystemService {
         }
         this.messageSubject.next(snackMessage);
       });
+  }
+
+  /* DEVTOOLS METHODS */
+
+  toggleDevTools(): void {
+    if(this.webContents.isDevToolsOpened()) {
+      this.webContents.closeDevTools();
+    }
+    else {
+      this.webContents.openDevTools();
+    }
   }
   
 }

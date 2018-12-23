@@ -18,8 +18,10 @@
     "electron-serve": "electron .",
     "electron-package": "electron-packager . CoinCollector --asar --all --prune --out=../dist/packaged --icon=./resources/icon/icon.ico --overwrite",
     "electron-package-windows": "electron-packager . CoinCollector --asar --platform=win32 --prune --out=../dist/packaged --icon=./resources/icon/icon.ico --overwrite",
+    "electron-package-linux": "electron-packager . CoinCollector --asar --platform=linux --arch=x64 --prune --out=../dist/packaged --icon=./resources/icon/icon.ico --overwrite",
     "electron-installer-compile": "tsc --p installer",
-    "electron-deploy-windows": "npm run electron-installer-compile && node dist/installer/build"
+    "electron-deploy-windows": "npm run electron-installer-compile && node dist/installer/build",
+    "electron-windows": "npm run electron-compile && npm run electron-build-prod && npm run electron-package-windows && npm run electron-deploy-windows"
   },
   "private": true,
   "dependencies": {

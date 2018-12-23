@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 
 import { InterfaceService, menu } from 'src/app/interface/interface.service';
+import { SystemService } from 'src/app/system/system.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,8 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private key: HotkeysService, 
     private router: Router,
-    private ui: InterfaceService
+    private ui: InterfaceService,
+    private system: SystemService
   ) { }
 
   ngOnInit() {
@@ -50,7 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
       return false;
     }));
 
-    this.key.add(new Hotkey('ctrl+f', (_event: KeyboardEvent): boolean => {
+    this.key.add(new Hotkey('ctrl+l', (_event: KeyboardEvent): boolean => {
       this.router.navigate(['collezione']);
       return false;
     }));
@@ -65,18 +67,28 @@ export class AppComponent implements OnInit, OnDestroy {
       return false;
     }));
 
-    this.key.add(new Hotkey('ctrl+r', (_event: KeyboardEvent): boolean => {
+    this.key.add(new Hotkey('ctrl+i', (_event: KeyboardEvent): boolean => {
       this.router.navigate(['resources/images']);
       return false;
     }));
 
-    this.key.add(new Hotkey('ctrl+a', (_event: KeyboardEvent): boolean => {
+    this.key.add(new Hotkey('ctrl+f', (_event: KeyboardEvent): boolean => {
+      this.router.navigate(['resources/invoices']);
+      return false;
+    }));
+
+    this.key.add(new Hotkey('ctrl+n', (_event: KeyboardEvent): boolean => {
       this.router.navigate(['gestione/add-scheda']);
       return false;
     }));
 
     this.key.add(new Hotkey('ctrl+b', (_event: KeyboardEvent): boolean => {
       this.router.navigate(['gestione/backup']);
+      return false;
+    }));
+
+    this.key.add(new Hotkey('ctrl+d', (_event: KeyboardEvent): boolean => {
+      this.system.toggleDevTools();
       return false;
     }));
 
