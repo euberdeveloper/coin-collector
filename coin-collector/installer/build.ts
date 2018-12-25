@@ -8,7 +8,7 @@ const settings = {
     loadingGif: './resources/loading-gif/installer.gif',
     noMsi: true,
     setupExe: 'CoinCollectorInstaller.exe',
-    iconUrl: 'file://' + path.resolve('./resources/icon/icon.ico'),
+    iconUrl: 'file://' + path.resolve('./resources/icons/win/icon.ico'),
     setupIcon: './resources/setup/setup.ico',
     description: 'App for an italian coin collector',
     exe: 'CoinCollector.exe',
