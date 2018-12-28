@@ -1,7 +1,7 @@
 # Coin Collector
 A desktop app made with Electron for an Italian coin collector.
 
-# Project destination
+## Project destination
 This is the source code of a desktop app made with electron. It was tested only for Windows, but it should work also for Linux and Mac.
 
 ## Project purpose
