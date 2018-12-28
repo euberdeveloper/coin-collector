@@ -18,3 +18,13 @@ used by other coin collectors to make an app which fits their own collection.
 This app was make with Electron. Typescript was used as main script language, both for main and render processes. There is a loading splash
 window made with only html and css. The main app is made with Angular, with the support of Angular Material and Flexbox for the layout and
 DexieDB (lib for IndexedDb) for the database. Other node modules were used to make the part wich works on the system.
+
+## How to use it
+If you want to run the project on windows:
+*install `nodejs`
+*download and unzip this repository
+*open the `coin-collector` folder with the command line
+*type `npm i`
+*type `npm run electron-windows`
+*in the root folder, go to `dist/deployed/windows` and run `CoinCollectorInstaller.exe` 
+*it should install the app and create a link on the desktop
