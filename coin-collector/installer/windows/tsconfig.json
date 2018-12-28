@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "../dist/installer",
+    "outDir": "../../dist/installer/windows",
     "sourceMap": true,
     "declaration": false,
     "module": "commonjs",

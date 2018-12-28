@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+/resources/icons
 
 # dependencies
 /node_modules

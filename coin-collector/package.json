@@ -1,6 +1,8 @@
 {
   "name": "coin-collector",
   "main": "dist/electron/main.js",
+  "author": "Eugenio Vinicio Berretta",
+  "license": "MIT",
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
@@ -19,12 +21,14 @@
     "electron-icons": "electron-icon-maker --input=resources/src/icon.png --output=./resources",
     "electron-package": "npm run electron-icons && electron-packager . CoinCollector --asar --all --prune --out=../dist/packaged --icon=resources/src/icon/icon.ico --overwrite",
     "electron-package-windows": "npm run electron-icons && electron-packager . CoinCollector --asar --platform=win32 --arch=x64 --prune --out=../dist/packaged --icon=resources/icons/win/icon.ico --overwrite",
-    "electron-package-linux": "npm run electron-icons && electron-packager . CoinCollector --asar --platform=linux --arch=x64 --prune --out=../dist/packaged --icon=resources/icons/png/64x64.png --overwrite",
+    "electron-package-linux": "npm run electron-icons && electron-packager . coin-collector --asar --platform=linux --arch=x64 --prune --out=../dist/packaged --icon=resources/icons/png/64x64.png --overwrite",
     "electron-package-mac": "npm run electron-icons && electron-packager . CoinCollector --asar --platform=darwin --arch=x64 --prune --out=../dist/packaged --icon=resources/icons/mac/icon.icns --overwrite",
-    "electron-winstaller-compile": "tsc --p installer",
-    "electron-deploy-windows": "npm run electron-winstaller-compile && node dist/installer/build",
+    "electron-winstaller-compile": "tsc --p installer/windows",
+    "electron-deploy-windows": "npm run electron-winstaller-compile && node dist/installer/windows/build",
+    "electron-deploy-linux": "npm run electron-installer-debian --config installer/linux/debian_installer.json",
     "electron-deploy-mac": "electron-installer-dmg ../dist/packaged/CoinCollector-darwin-x64 CoinCollector --out=../dist/deployed/mac --overwrite --icon=resources/icons/mac/icon.icns",
     "electron-windows": "npm run electron-compile && npm run electron-build-prod && npm run electron-package-windows && npm run electron-deploy-windows",
+    "electron-linux": "npm run electron-compile && npm run electron-build-prod && npm run electron-package-linux && npm run electron-deploy-linux",
     "electron-mac": "npm run electron-compile && npm run electron-build-prod && npm run electron-package-mac && npm run electron-deploy-mac"
   },
   "private": true,
@@ -70,7 +74,7 @@
     "electron": "^3.0.10",
     "electron-icon-maker": "0.0.4",
     "electron-installer-dmg": "^2.0.0",
-    "electron-packager": "^13.0.0",
+    "electron-packager": "^13.0.1",
     "electron-winstaller": "^2.7.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
@@ -81,7 +85,6 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
-    "tslint": "~5.11.0",
-    "typescript": "~3.1.6"
+    "tslint": "~5.11.0"
   }
 }
