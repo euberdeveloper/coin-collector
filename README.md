@@ -21,10 +21,10 @@ DexieDB (lib for IndexedDb) for the database. Other node modules were used to ma
 
 ## How to use it
 If you want to run the project on windows:
-*install `nodejs`
-*download and unzip this repository
-*open the `coin-collector` folder with the command line
-*type `npm i`
-*type `npm run electron-windows`
-*in the root folder, go to `dist/deployed/windows` and run `CoinCollectorInstaller.exe` 
-*it should install the app and create a link on the desktop
+* install `nodejs`
+* download and unzip this repository
+* open the `coin-collector` folder with the command line
+* type `npm i`
+* type `npm run electron-windows`
+* in the root folder, go to `dist/deployed/windows` and run `CoinCollectorInstaller.exe` 
+* it should install the app and create a link on the desktop
