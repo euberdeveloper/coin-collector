@@ -19,7 +19,7 @@ This app was make with Electron. Typescript was used as main script language, bo
 window made with only html and css. The main app is made with Angular, with the support of Angular Material and Flexbox for the layout and
 DexieDB (lib for IndexedDb) for the database. Other node modules were used to make the part wich works on the system.
 
-## How to use it
+## How to run it
 If you want to run the project on windows:
 * install `nodejs`
 * download and unzip this repository
