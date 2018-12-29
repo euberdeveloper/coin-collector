@@ -24,3 +24,25 @@ If you want to run the project on windows:
 * type `npm run electron-windows`
 * in the root folder, go to `dist/deployed/windows` and run `CoinCollectorInstaller.exe` 
 * it should install the app and create a link on the desktop
+
+## Commands
+These are the npm commands:
+* `npm run electron-splashscreen`: it moves all the html/css/js files from the electron folder to the dist folder
+* `npm run electron-compile`: it compiles the ts files in the electron folder and runs the electron-splashscreen command
+* `npm run electron-build`: it builds the angular site
+* `npm run electron-build-prod`: it builds the angular site optimized for production
+* `npm run electron-serve`: it serves the electron desktop app
+* `npm run electron`: it compiles the electron files, builds the angular project and serves the desktop app
+* `npm run electron-prod`: it compiles the electron files, builds the angular project for production and serves the desktop app
+* `npm run electron-icons`: it generates from an initial png the icons of the desktop apps in the resources folder
+* `npm run electron-package`: it packages the electron project in the apps for all the desktop os
+* `npm run electron-package-windows`: it packages the electron project in the apps for windows os
+* `npm run electron-package-linux`:  it packages the electron project in the apps for all linux os
+* `npm run electron-package-mac`: it packages the electron project in the apps for mac
+* `npm run electron-winstaller-compile`: it compiles the ts files in the installer/windows folder
+* `npm run electron-deploy-windows`:  it runs the electron-winstaller-compile command and generates the installer for windows
+* `npm run electron-deploy-linux`: it generates the installer for linux (debian)
+* `npm run electron-deploy-mac`: it generates the installer for mac
+* `npm run electron-windows`:  it compiles, packages the project and generates the installer for windows
+* `npm run electron-linux`: it compiles, packages the project and generates the installer for linux (debian)
+* `npm run electron-mac`: it compiles, packages the project and generates the installer for mac
