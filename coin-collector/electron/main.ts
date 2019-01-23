@@ -1,8 +1,14 @@
 import { app, ipcMain } from 'electron';
+import { updater } from 'update-electron-app';
 import { handleSquirrelEvent } from './squirrel-event';
 
+//Update app process
+updater({
+  updateInterval: '5 minutes'
+});
+
 // this should be placed at top of main.js to handle setup events quickly
-const stop = handleSquirrelEvent(app);
+const stop = require('electron-squirrel-startup') || handleSquirrelEvent(app);
 
 import * as zip from 'zip-a-folder';
 import * as unzip from 'extract-zip'
