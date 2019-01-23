@@ -1,10 +1,9 @@
 import { app, ipcMain } from 'electron';
-import { updater } from 'update-electron-app';
 import { handleSquirrelEvent } from './squirrel-event';
 
 //Update app process
-updater({
-  updateInterval: '5 minutes'
+require('update-electron-app')({
+  updateInterval: '1 hour'
 });
 
 // this should be placed at top of main.js to handle setup events quickly
