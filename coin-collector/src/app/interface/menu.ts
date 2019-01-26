@@ -1,11 +1,9 @@
-import {
-  Interface
-} from './interface.interface';
+import { Interface } from './interface.interface';
 
 export const menu: Interface = {
   toolbar: true,
-  color: 'primary',
-  title: 'MY COIN COLLECTOR',
+  color: 'warn',
+  title: 'COIN COLLECTOR',
   menu: {
     iconsColor: 'accent',
     items: [

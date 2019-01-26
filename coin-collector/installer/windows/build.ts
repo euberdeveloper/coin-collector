@@ -13,7 +13,9 @@ const settings = {
     description: 'App for an italian coin collector',
     exe: 'CoinCollector.exe',
     name: 'CoinCollector.exe',
-    title: 'CoinCollector'
+    title: 'CoinCollector'/*,
+    remoteReleases: 'https://github.com/euberdeveloper/coin-collector',
+    remoteToken: 'bc1987b7a5231a27e8962baa057526fb934a7998'*/
 };
 
 const resultPromise = installer.createWindowsInstaller(settings) as Promise<void>;

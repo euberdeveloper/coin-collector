@@ -21,3 +21,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .success_snack .mat-simple-snackbar-action {
     color: black;
 }
+
+.warn_snack {
+    background: #daa71c;
+}
+
+.warn_snack .mat-simple-snackbar-action {
+    color: black;
+}

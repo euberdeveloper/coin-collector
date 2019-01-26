@@ -41,4 +41,9 @@ export class InterfaceService {
     this.state.next(this._state);
   }
 
+  setIsUpdating(updating: boolean): void {
+    this._state.updating = updating;
+    this.state.next(this._state);
+  }
+
 }

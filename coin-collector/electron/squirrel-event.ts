@@ -3,7 +3,7 @@ import * as ChildProcess from 'child_process';
 import * as path from 'path';
 
 export function handleSquirrelEvent(application: App): boolean {
-    if (process.argv.length === 1) {
+    if (process.argv.length === 1 || process.platform !== 'win32') {
         return false;
     }
     const appFolder = path.resolve(process.execPath, '..');

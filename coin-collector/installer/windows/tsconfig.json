@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "../../dist/installer/windows",
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": false,
     "module": "commonjs",
     "moduleResolution": "node",

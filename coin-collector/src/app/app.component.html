@@ -12,6 +12,7 @@
       <span fxFlex></span>
     </mat-toolbar-row>
   </mat-toolbar>
+  <mat-progress-bar mode="indeterminate" color="accent" *ngIf="uiState && uiState.updating"></mat-progress-bar>
 
   <mat-sidenav-container fxFlex>
     <mat-sidenav mode="side" #sidenav>
