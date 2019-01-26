@@ -2,7 +2,7 @@ import { Interface } from './interface.interface';
 
 export const menu: Interface = {
   toolbar: true,
-  color: 'warn',
+  color: 'primary',
   title: 'COIN COLLECTOR',
   menu: {
     iconsColor: 'accent',

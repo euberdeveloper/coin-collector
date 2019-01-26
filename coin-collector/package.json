@@ -3,7 +3,7 @@
   "main": "dist/electron/main.js",
   "author": "Eugenio Vinicio Berretta <euberdeveloper@gmail.com>",
   "license": "MIT",
-  "version": "2.9.9",
+  "version": "3.0.0",
   "homepage": "https://github.com/euberdeveloper/coin-collector#readme",
   "repository": {
     "type": "git",
