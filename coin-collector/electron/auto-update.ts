@@ -5,7 +5,9 @@ let firstEvent: any;
 let currentEvent: any;
 
 export function updateCanStart(): void {
+  if(firstEvent) {
     firstEvent.sender.send('update-can-start');
+  }
 }
 
 export function autoUpdate(app: App, minutes?: number): void {
