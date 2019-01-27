@@ -46,3 +46,48 @@ These are the npm commands:
 * `npm run electron-windows`:  it compiles, packages the project and generates the installer for windows
 * `npm run electron-linux`: it compiles, packages the project and generates the installer for linux (debian)
 * `npm run electron-mac`: it compiles, packages the project and generates the installer for mac
+
+## Project structure
+```
+---- README.md
+---- LICENSE
+---> coin-collector
+-------- package.json
+-------- package-lock.json
+-------- tsconfig.json
+-------- tslint.json
+-------- angular.json
+-------> electron
+-------------- tsconfig.json
+-------------- main.ts
+-------------- main-window.ts
+-------------- splash-window.ts
+-------------- auto-update.ts
+-------------- squirrel-event.ts
+-------------- zip-manager.ts
+-------------> splashscreen
+------------------------ index.html
+------------------------ splashscreen.css
+-------> installer
+-------------> linux
+------------------------ debian_installer.json
+-------------> windows
+------------------------ tsconfig.json
+------------------------ build.ts
+-------> resources
+-------------> loading-gif
+------------------------ installer.gif
+-------------> setup
+------------------------ setup.ico
+-------------> src
+------------------------ icon.ico
+-------------> icons [built]
+-----------------------> src [angular source]
+-------> dist [built]
+-------------> angular
+-------------> electron
+-------------> installer
+---> dist [prod-built]
+-------> packaged
+-------> deployed
+```
