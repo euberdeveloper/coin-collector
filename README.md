@@ -85,7 +85,7 @@ These are the npm commands:
 -------------> <b>icons</b> <i>[built]</i>
 -----------------------> <b>src</b> <i>[angular source]</i>
 -------> <b>dist</b> <i>[built]</i>
--------------> <b>angular<b/>
+-------------> <b>angular</b>
 -------------> <b>electron<b/>
 -------------> <b>installer<b/>
 ---> <b>dist</b> <i>[prod-built]</i>
