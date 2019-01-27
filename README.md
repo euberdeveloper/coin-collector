@@ -48,16 +48,17 @@ These are the npm commands:
 * `npm run electron-mac`: it compiles, packages the project and generates the installer for mac
 
 ## Project structure
-```
+
+<pre>
 ---- README.md
 ---- LICENSE
----> coin-collector
+---> <b>coin-collector</b>
 -------- package.json
 -------- package-lock.json
 -------- tsconfig.json
 -------- tslint.json
 -------- angular.json
--------> electron
+-------> <b>electron</b>
 -------------- tsconfig.json
 -------------- main.ts
 -------------- main-window.ts
@@ -65,29 +66,30 @@ These are the npm commands:
 -------------- auto-update.ts
 -------------- squirrel-event.ts
 -------------- zip-manager.ts
--------------> splashscreen
+-------------> <b>splashscreen</b>
 ------------------------ index.html
 ------------------------ splashscreen.css
--------> installer
--------------> linux
+-------> <b>installer</b>
+-------------> <b>linux</b>
 ------------------------ debian_installer.json
--------------> windows
+-------------> <b>windows</b>
 ------------------------ tsconfig.json
 ------------------------ build.ts
--------> resources
--------------> loading-gif
+-------> <b>resources</b>
+-------------> <b>loading-gif</b>
 ------------------------ installer.gif
--------------> setup
+-------------> <b>setup</b>
 ------------------------ setup.ico
--------------> src
+-------------> <b>src</b>
 ------------------------ icon.ico
--------------> icons [built]
------------------------> src [angular source]
--------> dist [built]
--------------> angular
--------------> electron
--------------> installer
----> dist [prod-built]
--------> packaged
--------> deployed
-```
+-------------> <b>icons</b> <i>[built]</i>
+-----------------------> <b>src</b> <i>[angular source]</i>
+-------> <b>dist</b> <i>[built]</i>
+-------------> <b>angular<b/>
+-------------> <b>electron<b/>
+-------------> <b>installer<b/>
+---> <b>dist</b> <i>[prod-built]</i>
+-------> <b>packaged</b>
+-------> <b>deployed</b>
+</pre>
+
