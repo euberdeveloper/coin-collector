@@ -1,0 +1,23 @@
+{
+  "src": "../dist/packaged/CoinCollector-linux-x64",
+  "dest": "../dist/deployed/linux/debian",
+  "arch": "amd64",
+  "name": "coin-collector",
+  "productName": "coin-collector",
+  "genericName": "coin-collector",
+  "description": "A desktop app made with electron for an Italian coin collector.",
+  "icon": {
+    "48x48": "resources/icons/png/48x48.png",
+    "64x64": "resources/icons/png/64x64.png",
+    "128x128": "resources/icons/png/128x128.png",
+    "256x256": "resources/icons/png/256x256.png"
+  },
+  "section": "utils",
+  "categories": [
+    "Utility",
+    "Office"
+  ],
+  "lintianOverrides": [
+    "changelog-file-missing-in-native-package"
+  ]
+}
