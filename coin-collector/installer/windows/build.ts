@@ -2,8 +2,8 @@ import * as installer from 'electron-winstaller';
 import * as path from 'path';
 
 const settings = {
-    appDirectory: '../dist/packaged/CoinCollector-win32-x64',
-    outputDirectory: '../dist/deployed/windows',
+    appDirectory: './dist/packaged/CoinCollector-win32-x64',
+    outputDirectory: './dist/deployed/windows',
     authors: 'Eugenio Vinicio Berretta',
     loadingGif: './resources/loading-gif/installer.gif',
     noMsi: true,
@@ -13,9 +13,7 @@ const settings = {
     description: 'App for an italian coin collector',
     exe: 'CoinCollector.exe',
     name: 'CoinCollector.exe',
-    title: 'CoinCollector'/*,
-    remoteReleases: 'https://github.com/euberdeveloper/coin-collector',
-    remoteToken: 'bc1987b7a5231a27e8962baa057526fb934a7998'*/
+    title: 'CoinCollector'
 };
 
 const resultPromise = installer.createWindowsInstaller(settings) as Promise<void>;

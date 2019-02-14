@@ -1,4 +1,4 @@
-import { app, ipcMain } from 'electron';
+import { app } from 'electron';
 import { handleSquirrelEvent } from './squirrel-event';
 import { autoUpdate, updateCanStart } from './auto-update';
 import { manageZip } from './zip-manager';

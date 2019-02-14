@@ -5,6 +5,7 @@ html, body {
 
 body {
   margin: 0;
+  -webkit-app-region: drag;
 }
 
 #preloader {
