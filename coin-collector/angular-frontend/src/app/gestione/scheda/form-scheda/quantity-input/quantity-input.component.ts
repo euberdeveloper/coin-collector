@@ -113,7 +113,7 @@ export class QuantityInputComponent implements OnInit, OnDestroy, MatFormFieldCo
   private _disabled = false;
 
   get errorState() {
-    return this.ngControl.errors !== null && !!this.quantityForm.touched;
+    return this.ngControl.errors !== null && this.ngControl.touched;
   }
 
   controlType = 'quantity-input';
@@ -124,12 +124,10 @@ export class QuantityInputComponent implements OnInit, OnDestroy, MatFormFieldCo
   }
 
   onContainerClick(event: MouseEvent) {
-    if(!this.disabled) {
-      this._onTouched();
-    }
-   }
+    return;
+  }
 
-   writeValue(value: Quantity): void {
+  writeValue(value: Quantity): void {
     if(value instanceof Quantity) {
       this.quantityForm.setValue(value);
     }
@@ -158,6 +156,11 @@ export class QuantityInputComponent implements OnInit, OnDestroy, MatFormFieldCo
     }
   }
 
+  onBlur(): void {
+    this._onTouched();
+    this.stateChanges.next();
+  }
+
   constructor(
     @Optional() @Self() public ngControl: NgControl, 
     private fb: FormBuilder, 
@@ -183,6 +186,11 @@ export class QuantityInputComponent implements OnInit, OnDestroy, MatFormFieldCo
       () => {
         const value = this.value;
         if(this._onChange) this._onChange(value);
+        this.stateChanges.next();
+      }
+    );
+    this.ngControl.statusChanges.subscribe(
+      () => {
         this.stateChanges.next();
       }
     );
