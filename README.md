@@ -27,10 +27,12 @@ If you want to run the project on windows:
 
 ## Commands
 These are the npm commands:
-* `npm run electron-splashscreen`: it moves all the html/css/js files from the electron folder to the dist folder
-* `npm run electron-compile`: it compiles the ts files in the electron folder and runs the electron-splashscreen command
 * `npm run angular-build`: it builds the angular site
 * `npm run angular-prod`: it builds the angular site optimized for production
+* `npm run electron-splashscreen`: it moves all the html/css/js files from the electron folder to the dist folder
+* `npm run electron-compile`: it compiles the ts files in the electron folder and runs the electron-splashscreen command
+* `npm run electron-build`: it builds the angular site and compiles the electron app
+* `npm run electron-prod`: it builds the angular site optimized for production and compiles the electron app
 * `npm run electron-serve`: it serves the electron desktop app
 * `npm run electron`: it compiles the electron files, builds the angular project and serves the desktop app
 * `npm run electron-prod`: it compiles the electron files, builds the angular project for production and serves the desktop app
