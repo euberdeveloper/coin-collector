@@ -22,15 +22,15 @@ If you want to run the project on windows:
 * open the `coin-collector` folder with the command line
 * type `npm i`
 * type `npm run electron-windows`
-* in the root folder, go to `dist/deployed/windows` and run `CoinCollectorInstaller.exe` 
-* it should install the app and create a link on the desktop
+* in this folder, go to `dist/deployed/windows` and run `CoinCollectorInstaller.exe` 
+* it will install the app and create a link on the desktop
 
 ## Commands
 These are the npm commands:
 * `npm run electron-splashscreen`: it moves all the html/css/js files from the electron folder to the dist folder
 * `npm run electron-compile`: it compiles the ts files in the electron folder and runs the electron-splashscreen command
-* `npm run electron-build`: it builds the angular site
-* `npm run electron-build-prod`: it builds the angular site optimized for production
+* `npm run angular-build`: it builds the angular site
+* `npm run angular-prod`: it builds the angular site optimized for production
 * `npm run electron-serve`: it serves the electron desktop app
 * `npm run electron`: it compiles the electron files, builds the angular project and serves the desktop app
 * `npm run electron-prod`: it compiles the electron files, builds the angular project for production and serves the desktop app
@@ -55,9 +55,12 @@ These are the npm commands:
 ---> <b>coin-collector</b>
 -------- package.json
 -------- package-lock.json
--------- tsconfig.json
--------- tslint.json
--------- angular.json
+-------> <b>angular-frontend</b>
+-------------- tsconfig.json
+-------------- tslint.json
+-------------- angular.json
+-------------> <b>src</b>
+------------------------ app.html
 -------> <b>electron</b>
 -------------- tsconfig.json
 -------------- main.ts
@@ -86,10 +89,9 @@ These are the npm commands:
 -----------------------> <b>src</b> <i>[angular source]</i>
 -------> <b>dist</b> <i>[built]</i>
 -------------> <b>angular</b>
--------------> <b>electron<b/>
--------------> <b>installer<b/>
----> <b>dist</b> <i>[prod-built]</i>
--------> <b>packaged</b>
--------> <b>deployed</b>
+-------------> <b>electron</b>
+-------------> <b>installer</b>
+-------------> <b>packaged</b>
+-------------> <b>deployed</b>
 </pre>
 
