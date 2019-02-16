@@ -52,48 +52,50 @@ These are the npm commands:
 ## Project structure
 
 <pre>
----- README.md
----- LICENSE
----> <b>coin-collector</b>
--------- package.json
--------- package-lock.json
--------> <b>angular-frontend</b>
--------------- tsconfig.json
--------------- tslint.json
--------------- angular.json
--------------> <b>src</b>
------------------------- app.html
--------> <b>electron</b>
--------------- tsconfig.json
--------------- main.ts
--------------- main-window.ts
--------------- splash-window.ts
--------------- auto-update.ts
--------------- squirrel-event.ts
--------------- zip-manager.ts
--------------> <b>splashscreen</b>
------------------------- index.html
------------------------- splashscreen.css
--------> <b>installer</b>
--------------> <b>linux</b>
------------------------- debian_installer.json
--------------> <b>windows</b>
------------------------- tsconfig.json
------------------------- build.ts
--------> <b>resources</b>
--------------> <b>loading-gif</b>
------------------------- installer.gif
--------------> <b>setup</b>
------------------------- setup.ico
--------------> <b>src</b>
------------------------- icon.ico
--------------> <b>icons</b> <i>[built]</i>
------------------------> <b>src</b> <i>[angular source]</i>
--------> <b>dist</b> <i>[built]</i>
--------------> <b>angular</b>
--------------> <b>electron</b>
--------------> <b>installer</b>
--------------> <b>packaged</b>
--------------> <b>deployed</b>
+coin-collector
+ ├─> coin-collector
+ │   ├─> angular-frontend
+ │   │   ├── angular.json
+ │   │   ├── package-lock.json
+ │   │   ├── package.json
+ │   │   ├── tsconfig.json
+ │   │   ├── tslint.json
+ │   │   └─> src
+ │   │       └── index.html
+ │   ├─> dist
+ │   │   ├─> angular
+ │   │   ├─> electron
+ │   │   ├─> installer
+ │   │   ├─> packaged
+ │   │   └─> deployed
+ │   ├─> electron
+ │   │   ├── auto-update.ts
+ │   │   ├── main-window.ts
+ │   │   ├── main.ts
+ │   │   ├── splash-window.ts
+ │   │   ├── squirrel-event.ts
+ │   │   ├── tsconfig.json
+ │   │   ├── zip-manager.ts
+ │   │   └─> splashscreen
+ │   │       ├── index.html
+ │   │       └── splashscreen.css
+ │   ├─> installer
+ │   │   ├─> linux
+ │   │   │   └── debian_installer.json
+ │   │   └─> windows
+ │   │       ├── build.ts
+ │   │       └── tsconfig.json
+ │   ├─> resources
+ │   |   ├─> icons
+ │   |   ├─> loading-gif
+ │   |   │   └── installer.gif
+ │   |   ├─> setup
+ │   |   │   └── setup.ico
+ │   |   └─> src
+ │   |       └── icon.ico
+ │   ├── package-lock.json
+ │   └── package.json
+ ├── LICENSE
+ └── README.md
 </pre>
 
