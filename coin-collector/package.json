@@ -34,7 +34,8 @@
     "electron-deploy-mac": "electron-installer-dmg ./dist/packaged/CoinCollector-darwin-x64 CoinCollector --out=./dist/deployed/mac --overwrite --icon=resources/icons/mac/icon.icns",
     "electron-windows": "npm run electron-compile && npm run electron-build-prod && npm run electron-package-windows && npm run electron-deploy-windows",
     "electron-linux": "npm run electron-compile && npm run electron-build-prod && npm run electron-package-linux && npm run electron-deploy-linux",
-    "electron-mac": "npm run electron-compile && npm run electron-build-prod && npm run electron-package-mac && npm run electron-deploy-mac"
+    "electron-mac": "npm run electron-compile && npm run electron-build-prod && npm run electron-package-mac && npm run electron-deploy-mac",
+    "project-tree": "dree parse ../ -d ./project-tree -n project.tree -o ./project-tree/options.json"
   },
   "private": true,
   "devDependencies": {
@@ -42,6 +43,7 @@
     "@types/extract-zip": "^1.6.2",
     "@types/node": "^11.9.3",
     "copyfiles": "^2.1.0",
+    "dree": "^2.1.5",
     "electron": "^4.0.4",
     "electron-icon-maker": "0.0.4",
     "electron-packager": "^13.0.1",

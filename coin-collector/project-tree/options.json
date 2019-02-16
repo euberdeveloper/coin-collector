@@ -1,0 +1,33 @@
+{
+    "exclude": [ 
+        "node_modules", 
+        "git", 
+        ".editorconfig",
+        "e2e",
+        "angular-frontend\\src\\app",
+        "angular-frontend\\src\\assets",
+        "angular-frontend\\src\\browserslist",
+        "angular-frontend\\src\\environments",
+        "angular-frontend\\src\\favicon",
+        "angular-frontend\\src\\karma",
+        "angular-frontend\\src\\main",
+        "angular-frontend\\src\\polyfills",
+        "angular-frontend\\src\\styles",
+        "angular-frontend\\src\\test",
+        "angular-frontend\\src\\tsconfig",
+        "angular-frontend\\src\\tsconfig",
+        "angular-frontend\\src\\tslint",
+        "dist\\angular\\",
+        "dist\\electron\\",
+        "dist\\installer\\",
+        "dist\\packaged\\",
+        "dist\\deployed\\",
+        "resources\\icons\\",
+        ".old",
+        "icon.png",
+        "setup.png",
+        "animation",
+        "background",
+        "project-tree"
+    ]
+}
