@@ -15,8 +15,11 @@ used by other coin collectors to make an app which fits their own collection.
 ## How it was made
 This app was make with `Electron`. `Typescript` was used as main script language, both for main and render processes. There is a loading splash window made with only html and css. The main app is made with `Angular`, with the support of `Angular Material` and `Angular Flexbox` for the layout and `DexieDB` (lib for `IndexedDb`) for the database. Other node modules were used to make the part wich works on the system.
 
-## How to run it
-If you want to run the project on windows:
+## How to install it
+For `Windows`, a `.exe` installer is available in the [releases](https://github.com/euberdeveloper/coin-collector/releases) section of this GitHub project. Download and execute it to install the application. Updates are downloaded automatically and are installed when the app is opened. You can then uninstall it whenever you want in the Windows Control Panel. The app was not firmed and could be mistaken as a virus.
+
+## How to build it from code
+If you want to build the project on windows:
 * install `nodejs`
 * download and unzip this repository
 * open the `coin-collector` folder with the command line
